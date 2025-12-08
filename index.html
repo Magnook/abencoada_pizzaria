@@ -1,91 +1,72 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pedidos Pizzaria</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Abençoada Pizzaria - Faça seu Pedido</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"/>
+  <link rel="stylesheet" href="style.css"/>
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 <body>
-    <div class="container">
-        <h1 class="text-center my-4">Faça Seu Pedido!</h1>
-        
-        <!-- Cardápio -->
-        <section id="cardapio">
-            <h2>Cardápio</h2>
-            <div class="row">
-                <div class="col-md-6">
-                    <h3>Pizzas</h3>
-                    <ul class="list-group">
-                        <li class="list-group-item">
-                            <input type="checkbox" id="pizza1" data-preco="30"> Calabresa (R$30)
-                            <select class="form-select mt-2" id="qtd-pizza1" disabled>
-                                <option value="1">1</option><option value="2">2</option>
-                            </select>
-                        </li>
-                        <li class="list-group-item">
-                            <input type="checkbox" id="pizza2" data-preco="35"> Frango com Catupiry (R$35)
-                            <select class="form-select mt-2" id="qtd-pizza2" disabled>
-                                <option value="1">1</option><option value="2">2</option>
-                            </select>
-                        </li>
-                        <!-- Adicione mais itens aqui -->
-                    </ul>
-                </div>
-                <div class="col-md-6">
-                    <h3>Bebidas</h3>
-                    <ul class="list-group">
-                        <li class="list-group-item">
-                            <input type="checkbox" id="bebida1" data-preco="5"> Refrigerante Lata (R$5)
-                            <select class="form-select mt-2" id="qtd-bebida1" disabled>
-                                <option value="1">1</option><option value="2">2</option>
-                            </select>
-                        </li>
-                        <!-- Adicione mais -->
-                    </ul>
-                </div>
-            </div>
-        </section>
-        
-        <!-- Formulário de Pedido -->
-        <section id="pedido" class="mt-4">
-            <h2>Detalhes do Pedido</h2>
-            <form id="form-pedido">
-                <div class="mb-3">
-                    <label for="nome" class="form-label">Nome</label>
-                    <input type="text" class="form-control" id="nome" required>
-                </div>
-                <div class="mb-3">
-                    <label for="endereco" class="form-label">Endereço de Entrega</label>
-                    <input type="text" class="form-control" id="endereco" required>
-                </div>
-                <div class="mb-3">
-                    <label for="telefone" class="form-label">Telefone (WhatsApp)</label>
-                    <input type="tel" class="form-control" id="telefone" required pattern="[0-9]{11}">
-                </div>
-                <div class="mb-3">
-                    <label for="observacoes" class="form-label">Observações</label>
-                    <textarea class="form-control" id="observacoes"></textarea>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Forma de Pagamento</label>
-                    <select class="form-select" id="pagamento" required>
-                        <option value="">Selecione</option>
-                        <option value="dinheiro">Dinheiro na Entrega</option>
-                        <option value="pix">Pix (enviaremos a chave)</option>
-                        <option value="cartao">Cartão na Entrega</option>
-                    </select>
-                </div>
-                <p id="total" class="fw-bold">Total (com frete R$5): R$0</p>
-                <div class="g-recaptcha" data-sitekey="SUA_SITEKEY_AQUI"></div>
-                <button type="submit" class="btn btn-primary w-100 mt-3">Enviar Pedido</button>
-            </form>
-        </section>
+  <div class="container py-4">
+    <!-- Cabeçalho -->
+    <div class="text-center mb-5">
+      <h1 class="display-4 text-white fw-bold text-shadow">Abençoada Pizzaria</h1>
+      <p class="text-white fs-5">🍕 Peça pelo site e receba em casa!</p>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="script.js"></script>
+    <!-- Cardápio carregado via JSON -->
+    <div id="cardapio-container" class="row g-4"></div>
+
+    <!-- Formulário de pedido -->
+    <div class="card mt-5 shadow-lg border-0">
+      <div class="card-body p-4">
+        <h2 class="text-center mb-4">Finalizar Pedido</h2>
+        <form id="form-pedido">
+          <div class="row g-3">
+            <div class="col-12"><input type="text" class="form-control" placeholder="Seu nome" id="nome" required></div>
+            <div class="col-12"><input type="text" class="form-control" placeholder="Endereço completo" id="endereco" required></div>
+            <div class="col-12"><input type="tel" class="form-control" placeholder="WhatsApp (com DDD)" id="telefone" required></div>
+            <div class="col-12"><textarea class="form-control" rows="2" placeholder="Observações (ex: sem cebola, borda recheada...)" id="observacoes"></textarea></div>
+            
+            <div class="col-12">
+              <label class="form-label fw-bold">Forma de pagamento</label>
+              <select class="form-select" id="pagamento" required>
+                <option value="">Escolha...</option>
+                <option value="dinheiro">Dinheiro na entrega</option>
+                <option value="pix">Pix (enviaremos a chave)</option>
+                <option value="cartao">Cartão na entrega</option>
+              </select>
+            </div>
+
+            <div class="col-12">
+              <div class="alert alert-success" role="alert">
+                <strong>Frete fixo: R$ 5,00</strong> (bairros próximos)
+              </div>
+            </div>
+
+            <div class="col-12">
+              <p class="fs-4 fw-bold text-end text-danger" id="total">Total: R$ 0,00</p>
+            </div>
+
+            <div class="col-12">
+              <div class="g-recaptcha" data-sitekey="COLE_AQUI_SUA_SITEKEY_DO_RECAPTCHA"></div>
+            </div>
+
+            <div class="col-12">
+              <button type="submit" class="btn btn-danger btn-lg w-100 shadow">
+                <i class="bi bi-whatsapp"></i> Enviar Pedido no WhatsApp
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="cardapio.json"></script>
+  <script src="script.js"></script>
 </body>
 </html>
