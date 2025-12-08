@@ -1,34 +1,53 @@
+/* MATA QUALQUER FUNDO BRANCO DO PLANETA */
+html, body, .bg-light, [class*="bg-"] {
+    background: linear-gradient(135deg, #1e272e, #2c3e50, #1e272e) !important;
+    background-attachment: fixed !important;
+    color: #f8f9fa !important;
+}
+
+/* Força o body mesmo se o Bootstrap tentar mudar */
 body {
-  background: linear-gradient(135deg, #ff6b6b, #ffb366, #ff6b6b);
-  min-height: 100vh;
-  font-family: 'Poppins', sans-serif;
+    background: #1e272e !important;
+    margin: 0 !important;
+    padding: 0 !important;
 }
 
-.text-shadow {
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-}
-
-.card {
-  border-radius: 20px !important;
-}
-
-.btn-danger {
-  background: #d63031;
-  border: none;
-}
-
+/* Cards dos itens */
 .item-card {
-  background: rgba(255,255,255,0.95);
-  border-radius: 15px;
-  transition: all 0.3s;
+    background: rgba(52, 58, 64, 0.95) !important;
+    border-radius: 15px;
+    border: 1px solid #495057 !important;
+    color: #f8f9fa !important;
 }
 
-.item-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+/* Card do formulário */
+.card {
+    background: #1e1e1e !important;
+    border: none !important;
 }
 
-h2, h3 {
-  color: #fff;
-  text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
+/* Inputs */
+.form-control, .form-select {
+    background-color: #495057 !important;
+    border-color: #6c757d !important;
+    color: #f8f9fa !important;
+}
+
+/* Títulos */
+h1, h2, h3, h5 {
+    color: #ffc107 !important;
+}
+
+/* Botões */
+.btn-outline-warning { 
+    color: #ffc107 !important; 
+    border-color: #ffc107 !important; 
+}
+.btn-outline-warning:hover { 
+    background: #ffc107 !important; 
+    color: #212529 !important; 
+}
+.btn-warning { 
+    background: #ffc107 !important; 
+    color: #212529 !important; 
 }

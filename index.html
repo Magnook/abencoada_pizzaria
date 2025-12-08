@@ -9,31 +9,31 @@
   <link rel="stylesheet" href="style.css"/>
   <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
-<body>
+<body class="bg-dark text-light" style="background: linear-gradient(135deg, #1e272e, #2c3e50, #1e272e) !important; min-height: 100vh;">
   <div class="container py-4">
     <!-- Cabeçalho -->
     <div class="text-center mb-5">
-      <h1 class="display-4 text-white fw-bold text-shadow">Abençoada Pizzaria</h1>
-      <p class="text-white fs-5">🍕 Peça pelo site e receba em casa!</p>
+      <h1 class="display-4 text-light fw-bold text-shadow">Abençoada Pizzaria</h1>
+      <p class="text-light fs-5">🍕 Peça pelo site e receba em casa!</p>
     </div>
 
     <!-- Cardápio carregado via JSON -->
     <div id="cardapio-container" class="row g-4"></div>
 
     <!-- Formulário de pedido -->
-    <div class="card mt-5 shadow-lg border-0">
+    <div class="card mt-5 shadow-lg border-0 bg-dark text-light">
       <div class="card-body p-4">
         <h2 class="text-center mb-4">Finalizar Pedido</h2>
         <form id="form-pedido">
           <div class="row g-3">
-            <div class="col-12"><input type="text" class="form-control" placeholder="Seu nome" id="nome" required></div>
-            <div class="col-12"><input type="text" class="form-control" placeholder="Endereço completo" id="endereco" required></div>
-            <div class="col-12"><input type="tel" class="form-control" placeholder="WhatsApp (com DDD)" id="telefone" required></div>
-            <div class="col-12"><textarea class="form-control" rows="2" placeholder="Observações (ex: sem cebola, borda recheada...)" id="observacoes"></textarea></div>
+            <div class="col-12"><input type="text" class="form-control bg-secondary text-light" placeholder="Seu nome" id="nome" required></div>
+            <div class="col-12"><input type="text" class="form-control bg-secondary text-light" placeholder="Endereço completo" id="endereco" required></div>
+            <div class="col-12"><input type="tel" class="form-control bg-secondary text-light" placeholder="WhatsApp (com DDD)" id="telefone" required></div>
+            <div class="col-12"><textarea class="form-control bg-secondary text-light" rows="2" placeholder="Observações (ex: sem cebola, borda recheada...)" id="observacoes"></textarea></div>
             
             <div class="col-12">
               <label class="form-label fw-bold">Forma de pagamento</label>
-              <select class="form-select" id="pagamento" required>
+              <select class="form-select bg-secondary text-light" id="pagamento" required>
                 <option value="">Escolha...</option>
                 <option value="dinheiro">Dinheiro na entrega</option>
                 <option value="pix">Pix (enviaremos a chave)</option>
@@ -47,16 +47,22 @@
               </div>
             </div>
 
+            <!-- Novo: Lista do Carrinho -->
             <div class="col-12">
-              <p class="fs-4 fw-bold text-end text-danger" id="total">Total: R$ 0,00</p>
+              <h5 class="fw-bold">Seu Carrinho</h5>
+              <ul id="carrinho-lista" class="list-group mb-3"></ul>
             </div>
 
             <div class="col-12">
-              <div class="g-recaptcha" data-sitekey="COLE_AQUI_SUA_SITEKEY_DO_RECAPTCHA"></div>
+              <p class="fs-4 fw-bold text-end text-warning" id="total">Total: R$ 0,00</p>
             </div>
 
             <div class="col-12">
-              <button type="submit" class="btn btn-danger btn-lg w-100 shadow">
+              <div class="g-recaptcha" data-sitekey="6LdtiCUsAAAAAHznEXnCHNvQ1g8uTJmURclxkcFi"></div>
+            </div>
+
+            <div class="col-12">
+              <button type="submit" class="btn btn-warning btn-lg w-100 shadow text-dark">
                 <i class="bi bi-whatsapp"></i> Enviar Pedido no WhatsApp
               </button>
             </div>
@@ -66,7 +72,6 @@
     </div>
   </div>
 
-  <script src="cardapio.json"></script>
   <script src="script.js"></script>
 </body>
 </html>
