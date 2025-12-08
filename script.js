@@ -128,7 +128,7 @@ document.getElementById('form-pedido').addEventListener('submit', function(e) {
   });
 
   // Abre WhatsApp (CORREÇÃO: use location.href + seu número real)
-  const numeroPizzaria = '558191384055'; // ← COLE O NÚMERO AQUI! Ex: 55 + DDD + número sem traços
+  const numeroPizzaria = '5581991384055'; // ← COLE O NÚMERO AQUI! Ex: 55 + DDD + número sem traços
   const msgEncoded = encodeURIComponent(mensagem);
   window.location.href = `https://wa.me/${numeroPizzaria}?text=${msgEncoded}`;
 
