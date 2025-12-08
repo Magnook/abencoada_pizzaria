@@ -96,39 +96,46 @@ document.getElementById('form-pedido').addEventListener('submit', function(e) {
   const obs = document.getElementById('observacoes').value;
   const pagamento = document.getElementById('pagamento').value;
 
-  const itensTexto = carrinho.map(i => `• ${i.nome} - R$ ${i.preco},00`).join('%0A');
+  const itensTexto = carrinho.map(i => `• ${i.nome} - R$ ${i.preco},00`).join('\n');
   const total = document.getElementById('total').dataset.total;
 
-  const mensagem = `*Novo Pedido - Abençoada Pizzaria*%0A%0A` +
-    `*Nome:* ${nome}%0A` +
-    `*Endereço:* ${endereco}%0A` +
-    `*WhatsApp:* ${telefone}%0A%0A` +
-    `*Itens:*%0A${itensTexto}%0A%0A` +
-    `*Frete:* R$ 5,00%0A` +
-    `*Total:* R$ ${total},00%0A%0A` +
-    `*Pagamento:* ${pagamento}%0A` +
+  const mensagem = `*Novo Pedido - Abençoada Pizzaria*\n\n` +
+    `*Nome:* ${nome}\n` +
+    `*Endereço:* ${endereco}\n` +
+    `*WhatsApp:* ${telefone}\n\n` +
+    `*Itens:*\n${itensTexto}\n\n` +
+    `*Frete:* R$ 5,00\n` +
+    `*Total:* R$ ${total},00\n\n` +
+    `*Pagamento:* ${pagamento}\n` +
     `*Observações:* ${obs || 'Nenhuma'}`;
 
-  // Envia pro Google Sheets (substitua os entry.XXXXXX pelos IDs reais do seu form)
+  // Envia pro Google Sheets (ainda placeholder - vamos configurar depois)
   const formData = new FormData();
   formData.append('entry.123456789', nome);      // ← troque pelos seus IDs
   formData.append('entry.987654321', telefone);
   formData.append('entry.111222333', endereco);
-  formData.append('entry.444555666', carrinho.map(i => `${i.nome} - R$${i.preco}`).join(' | ') + ' | Total: R$' + total);
+  formData.append('entry.444555666', itensTexto.replace(/\n/g, ' | ') + ' | Total: R$' + total);
   formData.append('entry.777888999', obs);
 
   fetch('https://docs.google.com/forms/d/e/SEU_FORM_ID_AQUI/formResponse', {
     method: 'POST',
     mode: 'no-cors',
     body: formData
+  }).then(() => {
+    alert('Pedido enviado! Abrindo WhatsApp...');
+  }).catch(() => {
+    alert('Erro no envio para planilha. Mas vamos pro WhatsApp mesmo assim!');
   });
 
-  // Abre WhatsApp
-  const numeroPizzaria = '5581979067586'; // ex: 5581999999999
-  window.open(`https://wa.me/${numeroPizzaria}?text=${mensagem}`, '_blank');
+  // Abre WhatsApp (CORREÇÃO: use location.href + seu número real)
+  const numeroPizzaria = '5581979067586'; // ← COLE O NÚMERO AQUI! Ex: 55 + DDD + número sem traços
+  const msgEncoded = encodeURIComponent(mensagem);
+  window.location.href = `https://wa.me/${numeroPizzaria}?text=${msgEncoded}`;
 
-  // Limpa carrinho após envio (opcional)
+  // Limpa form e carrinho
+  document.getElementById('form-pedido').reset();
   carrinho = [];
   atualizarCarrinho();
   atualizarTotal();
+  grecaptcha.reset(); // Limpa o reCAPTCHA
 });
