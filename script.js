@@ -111,13 +111,13 @@ document.getElementById('form-pedido').addEventListener('submit', function(e) {
 
   // Envia pro Google Sheets (ainda placeholder - vamos configurar depois)
   const formData = new FormData();
-  formData.append('entry.123456789', nome);      // ← troque pelos seus IDs
-  formData.append('entry.987654321', telefone);
-  formData.append('entry.111222333', endereco);
-  formData.append('entry.444555666', itensTexto.replace(/\n/g, ' | ') + ' | Total: R$' + total);
-  formData.append('entry.777888999', obs);
+  formData.append('entry.1171888313', nome);      // ← troque pelos seus IDs
+  formData.append('entry.1825518668', telefone);
+  formData.append('entry.1876354563', endereco);
+  formData.append('entry.243231740', itensTexto.replace(/\n/g, ' | ') + ' | Total: R$' + total);
+  formData.append('entry.1708352740', obs);
 
-  fetch('https://docs.google.com/forms/d/e/SEU_FORM_ID_AQUI/formResponse', {
+  fetch('https://docs.google.com/forms/d/e/1FAIpQLScRWk5OQXgILmc4Y1HPLHs5Idb8KGypEKTYl8yyotIb87afzQ/viewform?usp=dialog', {
     method: 'POST',
     mode: 'no-cors',
     body: formData
@@ -128,7 +128,7 @@ document.getElementById('form-pedido').addEventListener('submit', function(e) {
   });
 
   // Abre WhatsApp (CORREÇÃO: use location.href + seu número real)
-  const numeroPizzaria = '5581979067586'; // ← COLE O NÚMERO AQUI! Ex: 55 + DDD + número sem traços
+  const numeroPizzaria = '558191384055'; // ← COLE O NÚMERO AQUI! Ex: 55 + DDD + número sem traços
   const msgEncoded = encodeURIComponent(mensagem);
   window.location.href = `https://wa.me/${numeroPizzaria}?text=${msgEncoded}`;
 
