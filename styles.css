@@ -1,0 +1,24 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+}
+
+.container {
+    max-width: 800px;
+    padding: 15px;
+}
+
+@media (min-width: 768px) {
+    .container {
+        padding: 30px;
+    }
+}
+
+.list-group-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-select {
+    width: 100px;
+}
