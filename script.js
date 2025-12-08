@@ -117,7 +117,7 @@ document.getElementById('form-pedido').addEventListener('submit', function(e) {
   formData.append('entry.243231740', itensTexto.replace(/\n/g, ' | ') + ' | Total: R$' + total);
   formData.append('entry.1708352740', obs);
 
-  fetch('https://docs.google.com/forms/d/e/1FAIpQLScRWk5OQXgILmc4Y1HPLHs5Idb8KGypEKTYl8yyotIb87afzQ/viewform?usp=dialog', {
+  fetch('https://docs.google.com/forms/d/e/1FAIpQLScRWk5OQXgILmc4Y1HPLHs5Idb8KGypEKTYl8yyotIb87afzQ/formResponse', {
     method: 'POST',
     mode: 'no-cors',
     body: formData
@@ -130,7 +130,7 @@ document.getElementById('form-pedido').addEventListener('submit', function(e) {
   // Abre WhatsApp (CORREÇÃO: use location.href + seu número real)
   const numeroPizzaria = '5581991384055'; // ← COLE O NÚMERO AQUI! Ex: 55 + DDD + número sem traços
   const msgEncoded = encodeURIComponent(mensagem);
-  window.location.href = `https://wa.me/${numeroPizzaria}?text=${msgEncoded}`;
+  window.open(`https://wa.me/${numeroPizzaria}?text=${msgEncoded}`, '_blank');
 
   // Limpa form e carrinho
   document.getElementById('form-pedido').reset();
