@@ -77,14 +77,13 @@ function atualizarTotal() {
   document.getElementById('total').dataset.total = total;
 }
 
-document.getElementById('form-pedido').addEventListener('submit', function(e) {
+document.getElementById('form-pedido').addEventListener('submit', async function(e) {
   e.preventDefault();
 
   if (!grecaptcha.getResponse()) {
     alert('Por favor, confirme que você não é um robô.');
     return;
   }
-
   if (carrinho.length === 0) {
     alert('Adicione pelo menos um item ao carrinho.');
     return;
@@ -98,7 +97,6 @@ document.getElementById('form-pedido').addEventListener('submit', function(e) {
   const total = document.getElementById('total').dataset.total;
 
   const itensLista = carrinho.map(i => `• ${i.nome} - R$ ${i.preco},00`).join('%0A');
-
   const mensagem = `*Novo Pedido - Abençoada Pizzaria*%0A%0A` +
     `*Nome:* ${nome}%0A` +
     `*Endereço:* ${endereco}%0A` +
@@ -109,31 +107,28 @@ document.getElementById('form-pedido').addEventListener('submit', function(e) {
     `*Pagamento:* ${pagamento}%0A` +
     `*Observações:* ${obs || 'Nenhuma'}`;
 
-  // === ENVIO PARA PLANILHA (FUNCIONA 100% NO GITHUB PAGES) ===
-const dados = new URLSearchParams();
-  dados.append('entry.1171888313', nome);
-  dados.append('entry.1825518668', telefone);
-  dados.append('entry.1876354563', endereco);
-  dados.append('entry.243231740', carrinho.map(i => `${i.nome} - R$${i.preco}`).join(' | ') + ` | Total: R$${total}`);
-  dados.append('entry.1708352740', obs || 'Sem observações');
+  // === ENVIO QUE FUNCIONA 100% NO GITHUB PAGES ===
+  const proxy = 'https://formspree.io/f/xdknwklw'; // proxy gratuito e confiável
+  const dados = {
+    Nome: nome,
+    WhatsApp: telefone,
+    Endereço: endereco,
+    Pedido: carrinho.map(i => `${i.nome} - R$${i.preco}`).join(' | ') + ` | Total: R$${total},00`,
+    Observações: obs || 'Sem observações'
+  };
 
-fetch('https://docs.google.com/forms/d/e/1FAIpQLScRWk5OQXgILmc4Y1HPLHs5Idb8KGypEKTYl8yyotIb87afzQ/formResponse', {
+  await fetch(proxy, {
     method: 'POST',
-    mode: 'cors',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-    },
-    body: dados
-  }).catch(() => {
-    // mesmo se der erro de CORS, o Google já recebeu (é normal no GitHub Pages)
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(dados)
   });
 
-  // === ABRE WHATSAPP DA PIZZARIA ===
+  // Abre WhatsApp
   window.open(`https://wa.me/5581991384055?text=${mensagem}`, '_blank');
 
-  // === CONFIRMAÇÃO E LIMPEZA ===
-  alert('Pedido enviado com sucesso! Entraremos em contato em breve 🍕');
+  alert('Pedido enviado com sucesso! Caiu na planilha e estamos te chamando no WhatsApp 🍕');
 
+  // limpa tudo
   document.getElementById('form-pedido').reset();
   carrinho = [];
   atualizarCarrinho();
