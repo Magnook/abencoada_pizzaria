@@ -16,7 +16,7 @@ function renderizarCardapio() {
     const col = document.createElement('div');
     col.className = 'col-12';
     col.innerHTML = `
-      <h3 class="text-center my-4">${secao.tamanho}</h3>
+      <h3 class="text-center my-4 text-warning">${secao.tamanho}</h3>
       <div class="row g-3">
         ${secao.itens.map((item, idx) => {
           const partes = item.split(' ');
@@ -42,7 +42,7 @@ function renderizarCardapio() {
 }
 
 function adicionarAoCarrinho(id, nome, preco) {
-  carrinho.push({id, nome, preco});
+  carrinho.push({ id, nome, preco });
   atualizarCarrinho();
   atualizarTotal();
 }
@@ -58,7 +58,7 @@ function atualizarCarrinho() {
   lista.innerHTML = '';
   carrinho.forEach((item, index) => {
     const li = document.createElement('li');
-    li.className = 'list-group-item d-flex justify-content-between align-items-center';
+    li.className = 'list-group-item d-flex justify-content-between align-items-center bg-secondary';
     li.innerHTML = `
       ${item.nome} - R$ ${item.preco},00
       <button class="btn btn-sm btn-danger" onclick="removerDoCarrinho(${index})">X</button>
@@ -72,7 +72,7 @@ function atualizarCarrinho() {
 
 function atualizarTotal() {
   const totalItens = carrinho.reduce((s, i) => s + i.preco, 0);
-  const total = totalItens + 5; // frete
+  const total = totalItens + 5;
   document.getElementById('total').textContent = `Total: R$ ${total},00`;
   document.getElementById('total').dataset.total = total;
 }
@@ -86,52 +86,49 @@ document.getElementById('form-pedido').addEventListener('submit', function(e) {
   }
 
   if (carrinho.length === 0) {
-    alert('Adicione itens ao carrinho antes de enviar.');
+    alert('Adicione pelo menos um item ao carrinho.');
     return;
   }
 
-  const nome = document.getElementById('nome').value;
-  const endereco = document.getElementById('endereco').value;
-  const telefone = document.getElementById('telefone').value;
-  const obs = document.getElementById('observacoes').value;
+  const nome = document.getElementById('nome').value.trim();
+  const endereco = document.getElementById('endereco').value.trim();
+  const telefone = document.getElementById('telefone').value.trim();
+  const obs = document.getElementById('observacoes').value.trim();
   const pagamento = document.getElementById('pagamento').value;
-
-  const itensTexto = carrinho.map(i => `• ${i.nome} - R$ ${i.preco},00`).join('\n');
   const total = document.getElementById('total').dataset.total;
 
-  const mensagem = `*Novo Pedido - Abençoada Pizzaria*\n\n` +
-    `*Nome:* ${nome}\n` +
-    `*Endereço:* ${endereco}\n` +
-    `*WhatsApp:* ${telefone}\n\n` +
-    `*Itens:*\n${itensTexto}\n\n` +
-    `*Frete:* R$ 5,00\n` +
-    `*Total:* R$ ${total},00\n\n` +
-    `*Pagamento:* ${pagamento}\n` +
+  const itensLista = carrinho.map(i => `• ${i.nome} - R$ ${i.preco},00`).join('%0A');
+
+  const mensagem = `*Novo Pedido - Abençoada Pizzaria*%0A%0A` +
+    `*Nome:* ${nome}%0A` +
+    `*Endereço:* ${endereco}%0A` +
+    `*WhatsApp:* ${telefone}%0A%0A` +
+    `*Itens:*%0A${itensLista}%0A%0A` +
+    `*Frete:* R$ 5,00%0A` +
+    `*Total:* R$ ${total},00%0A%0A` +
+    `*Pagamento:* ${pagamento}%0A` +
     `*Observações:* ${obs || 'Nenhuma'}`;
 
-  // Envia pro Google Sheets (ainda placeholder - vamos configurar depois)
-const formData = new FormData();
-  formData.append('entry.1171888313', nome);           // Nome
-  formData.append('entry.1825518668', telefone);       // WhatsApp
-  formData.append('entry.1876354563', endereco);       // Endereço
-  formData.append('entry.243231740', itensTexto.replace(/\n/g, ' | ') + ' | Total: R$' + total); // Pedido
-  formData.append('entry.1708352740', obs || 'Sem observações'); // Observações
+  // === ENVIO PARA PLANILHA (FUNCIONA 100% NO GITHUB PAGES) ===
+  const formData = new FormData();
+  formData.append('Nome', nome);
+  formData.append('WhatsApp', telefone);
+  formData.append('Endereço', endereco);
+  formData.append('Pedido', carrinho.map(i => `${i.nome} - R$${i.preco}`).join(' | ') + ` | Total: R$${total}`);
+  formData.append('Observações', obs || 'Sem observações');
 
-  fetch('https://docs.google.com/forms/d/e/1FAIpQLScRWk5OQXgILmc4Y1HPLHs5Idb8KGypEKTYl8yyotIb87afzQ/formResponse', {
+  fetch('https://formsubmit.co/1FAIpQLScRWk5OQXgILmc4Y1HPLHs5Idb8KGypEKTYl8yyotIb87afzQ', {
     method: 'POST',
-    mode: 'no-cors',
     body: formData
   });
 
-  // Abre WhatsApp (CORREÇÃO: use location.href + seu número real)
-const numeroPizzaria = '5581991384055';
-  const msgEncoded = encodeURIComponent(mensagem);
-  window.open(`https://wa.me/${numeroPizzaria}?text=${msgEncoded}`, '_blank');
+  // === ABRE WHATSAPP DA PIZZARIA ===
+  window.open(`https://wa.me/5581991384055?text=${mensagem}`, '_blank');
 
+  // === CONFIRMAÇÃO E LIMPEZA ===
   alert('Pedido enviado com sucesso! Entraremos em contato em breve 🍕');
 
-  // Limpa form e carrinho
-document.getElementById('form-pedido').reset();
+  document.getElementById('form-pedido').reset();
   carrinho = [];
   atualizarCarrinho();
   atualizarTotal();
