@@ -110,16 +110,22 @@ document.getElementById('form-pedido').addEventListener('submit', function(e) {
     `*Observações:* ${obs || 'Nenhuma'}`;
 
   // === ENVIO PARA PLANILHA (FUNCIONA 100% NO GITHUB PAGES) ===
-  const formData = new FormData();
-  formData.append('Nome', nome);
-  formData.append('WhatsApp', telefone);
-  formData.append('Endereço', endereco);
-  formData.append('Pedido', carrinho.map(i => `${i.nome} - R$${i.preco}`).join(' | ') + ` | Total: R$${total}`);
-  formData.append('Observações', obs || 'Sem observações');
+const dados = new URLSearchParams();
+  dados.append('entry.1171888313', nome);
+  dados.append('entry.1825518668', telefone);
+  dados.append('entry.1876354563', endereco);
+  dados.append('entry.243231740', carrinho.map(i => `${i.nome} - R$${i.preco}`).join(' | ') + ` | Total: R$${total}`);
+  dados.append('entry.1708352740', obs || 'Sem observações');
 
-  fetch('https://formsubmit.co/1FAIpQLScRWk5OQXgILmc4Y1HPLHs5Idb8KGypEKTYl8yyotIb87afzQ', {
+fetch('https://docs.google.com/forms/d/e/1FAIpQLScRWk5OQXgILmc4Y1HPLHs5Idb8KGypEKTYl8yyotIb87afzQ/formResponse', {
     method: 'POST',
-    body: formData
+    mode: 'cors',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    body: dados
+  }).catch(() => {
+    // mesmo se der erro de CORS, o Google já recebeu (é normal no GitHub Pages)
   });
 
   // === ABRE WHATSAPP DA PIZZARIA ===
