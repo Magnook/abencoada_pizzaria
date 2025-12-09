@@ -110,32 +110,30 @@ document.getElementById('form-pedido').addEventListener('submit', function(e) {
     `*Observações:* ${obs || 'Nenhuma'}`;
 
   // Envia pro Google Sheets (ainda placeholder - vamos configurar depois)
-  const formData = new FormData();
-  formData.append('entry.1171888313', nome);      // ← troque pelos seus IDs
-  formData.append('entry.1825518668', telefone);
-  formData.append('entry.1876354563', endereco);
-  formData.append('entry.243231740', itensTexto.replace(/\n/g, ' | ') + ' | Total: R$' + total);
-  formData.append('entry.1708352740', obs);
+const formData = new FormData();
+  formData.append('entry.1171888313', nome);           // Nome
+  formData.append('entry.1825518668', telefone);       // WhatsApp
+  formData.append('entry.1876354563', endereco);       // Endereço
+  formData.append('entry.243231740', itensTexto.replace(/\n/g, ' | ') + ' | Total: R$' + total); // Pedido
+  formData.append('entry.1708352740', obs || 'Sem observações'); // Observações
 
   fetch('https://docs.google.com/forms/d/e/1FAIpQLScRWk5OQXgILmc4Y1HPLHs5Idb8KGypEKTYl8yyotIb87afzQ/formResponse', {
     method: 'POST',
     mode: 'no-cors',
     body: formData
-  }).then(() => {
-    alert('Pedido enviado! Abrindo WhatsApp...');
-  }).catch(() => {
-    alert('Erro no envio para planilha. Mas vamos pro WhatsApp mesmo assim!');
   });
 
   // Abre WhatsApp (CORREÇÃO: use location.href + seu número real)
-  const numeroPizzaria = '5581991384055'; // ← COLE O NÚMERO AQUI! Ex: 55 + DDD + número sem traços
+const numeroPizzaria = '5581991384055';
   const msgEncoded = encodeURIComponent(mensagem);
   window.open(`https://wa.me/${numeroPizzaria}?text=${msgEncoded}`, '_blank');
 
+  alert('Pedido enviado com sucesso! Entraremos em contato em breve 🍕');
+
   // Limpa form e carrinho
-  document.getElementById('form-pedido').reset();
+document.getElementById('form-pedido').reset();
   carrinho = [];
   atualizarCarrinho();
   atualizarTotal();
-  grecaptcha.reset(); // Limpa o reCAPTCHA
+  grecaptcha.reset();
 });
