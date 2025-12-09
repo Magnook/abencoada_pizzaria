@@ -108,7 +108,7 @@ document.getElementById('form-pedido').addEventListener('submit', async function
     `*Observações:* ${obs || 'Nenhuma'}`;
 
   // === ENVIO QUE FUNCIONA 100% NO GITHUB PAGES ===
-  const proxy = 'https://formspree.io/f/xdknwklw'; // proxy gratuito e confiável
+  const proxy = 'https://formspree.io/f/xldqwobk'; // proxy gratuito e confiável
   const dados = {
     Nome: nome,
     WhatsApp: telefone,
