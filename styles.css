@@ -1,15 +1,19 @@
-/* MATA QUALQUER FUNDO BRANCO DO PLANETA */
-html, body, .bg-light, [class*="bg-"] {
+/* Fundo e resets (mantido, mas refinado) */
+html,
+body,
+.bg-light,
+[class*="bg-"] {
     background: linear-gradient(135deg, #1e272e, #2c3e50, #1e272e) !important;
     background-attachment: fixed !important;
     color: #f8f9fa !important;
 }
 
-/* Força o body mesmo se o Bootstrap tentar mudar */
 body {
     background: #1e272e !important;
     margin: 0 !important;
     padding: 0 !important;
+    font-family: 'Arial', sans-serif;
+    /* Fonte mais limpa */
 }
 
 /* Cards dos itens */
@@ -18,36 +22,109 @@ body {
     border-radius: 15px;
     border: 1px solid #495057 !important;
     color: #f8f9fa !important;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    /* Animação suave */
 }
 
-/* Card do formulário */
-.card {
+.item-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(255, 193, 7, 0.5) !important;
+    /* Destaque amarelo */
+}
+
+/* Card do modal */
+.modal-content {
     background: #1e1e1e !important;
     border: none !important;
+    border-radius: 20px;
+    /* Mais arredondado */
 }
 
 /* Inputs */
-.form-control, .form-select {
+.form-control,
+.form-select {
     background-color: #495057 !important;
     border-color: #6c757d !important;
     color: #f8f9fa !important;
+    transition: border-color 0.3s;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: #ffc107 !important;
+    box-shadow: 0 0 5px rgba(255, 193, 7, 0.5);
 }
 
 /* Títulos */
-h1, h2, h3, h5 {
+h1,
+h2,
+h3,
+h5 {
     color: #ffc107 !important;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    /* Sombra para destaque */
 }
 
 /* Botões */
-.btn-outline-warning { 
-    color: #ffc107 !important; 
-    border-color: #ffc107 !important; 
+.btn-outline-warning {
+    color: #ffc107 !important;
+    border-color: #ffc107 !important;
+    transition: all 0.3s;
 }
-.btn-outline-warning:hover { 
-    background: #ffc107 !important; 
-    color: #212529 !important; 
+
+.btn-outline-warning:hover {
+    background: #ffc107 !important;
+    color: #212529 !important;
 }
-.btn-warning { 
-    background: #ffc107 !important; 
-    color: #212529 !important; 
+
+.btn-warning {
+    background: #ffc107 !important;
+    color: #212529 !important;
+    transition: transform 0.2s;
+}
+
+.btn-warning:hover {
+    transform: scale(1.02);
+}
+
+/* Lista do carrinho */
+.list-group-item {
+    border-radius: 10px !important;
+    margin-bottom: 10px;
+}
+
+/* Ícone flutuante */
+#floating-cart {
+    pointer-events: auto;
+}
+
+/* Toast de sucesso personalizado - mais legível no tema escuro */
+.toast {
+    min-width: 300px;
+    background-color: rgba(25, 135, 84, 0.95) !important;
+    /* Verde escuro sucesso, quase opaco */
+    color: #ffffff !important;
+    /* Texto branco puro */
+    border: 1px solid #2ca56a;
+    /* Borda verde clara para destaque */
+    border-radius: 12px;
+    /* Mais arredondado e moderno */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    /* Sombra forte para "flutuar" */
+}
+
+.toast-body {
+    font-weight: bold;
+    /* Texto em negrito para melhor leitura */
+    font-size: 1.1rem;
+}
+
+.toast .btn-close-white {
+    filter: invert(1);
+    /* Garante que o X de fechar fique branco */
+}
+
+/* Badge do carrinho flutuante */
+.badge {
+    font-size: 0.8rem;
 }
