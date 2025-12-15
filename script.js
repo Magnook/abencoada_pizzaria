@@ -64,7 +64,7 @@ function adicionarAoCarrinho(id, nome, preco) {
 function mostrarToast(mensagem) {
     const container = document.getElementById('toast-container');
     const toastEl = document.createElement('div');
-    toastEl.className = 'toast align-items-center text-white border-0';
+    toastEl.className = 'toast align-items-center text-white border-0 bg-success';
     toastEl.role = 'alert';
     toastEl.innerHTML = `
     <div class="d-flex">
