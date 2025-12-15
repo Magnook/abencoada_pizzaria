@@ -1,26 +1,56 @@
 [
   {
-    "tamanho": "Pequena",
+    "tamanho": "🍕Pequena🍕",
     "precoBase": 0,
     "itens": [
-      "Mussarela 18", "Calabresa 22", "Três queijos 26", "Frango 25",
-      "Mista 25", "Presunto 23", "Milho 22", "Camarão 27"
+      "Mussarela 18",
+      "Calabresa 22",
+      "Três queijos 26",
+      "Frango 25",
+      "Mista 25",
+      "Presunto 23",
+      "Milho 22",
+      "Camarão 27"
     ]
   },
   {
-    "tamanho": "Média",
+    "tamanho": "🍕🍕Média🍕🍕",
     "precoBase": 0,
     "itens": [
-      "Mussarela 27", "Calabresa 29", "Três queijos 34", "Frango 35",
-      "Mista 37", "Presunto 34", "Milho 35", "Camarão 40"
+      "Mussarela 27",
+      "Calabresa 29",
+      "Três queijos 34",
+      "Frango 35",
+      "Mista 37",
+      "Presunto 34",
+      "Milho 35",
+      "Camarão 40"
     ]
   },
   {
-    "tamanho": "Grande",
+    "tamanho": "🍕🍕🍕Grande🍕🍕🍕",
     "precoBase": 5,
     "itens": [
-      "Mussarela 33", "Calabresa 38", "Três queijos 43", "Frango 45",
-      "Mista 45", "Presunto 37", "Milho 36", "Camarão 56"
+      "Mussarela 33",
+      "Calabresa 38",
+      "Três queijos 43",
+      "Frango 45",
+      "Mista 45",
+      "Presunto 37",
+      "Milho 36",
+      "Camarão 56"
+    ]
+  },
+  {
+    "tamanho": "🧃Bebidas🧃",
+    "precoBase": 0,
+    "itens": [
+      "Guaraná Antártica 1L 9.00",
+      "Fanta Laranja 1L 9.00",
+      "Coca-Cola 1L 9.00",
+      "Coca-Cola & Coca-Cola Zero 2L 13.00",
+      "Fanta Laranja 2L 13.00",
+      "Guaraná 2L 13.00"
     ]
   }
 ]

@@ -1,4 +1,4 @@
-/* Fundo e resets (mantido, mas refinado) */
+/* Fundo e resets */
 html,
 body,
 .bg-light,
@@ -13,7 +13,6 @@ body {
     margin: 0 !important;
     padding: 0 !important;
     font-family: 'Arial', sans-serif;
-    /* Fonte mais limpa */
 }
 
 /* Cards dos itens */
@@ -23,13 +22,11 @@ body {
     border: 1px solid #495057 !important;
     color: #f8f9fa !important;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    /* Animação suave */
 }
 
 .item-card:hover {
     transform: scale(1.05);
-    box-shadow: 0 0 15px rgba(255, 193, 7, 0.5) !important;
-    /* Destaque amarelo */
+    box-shadow: 0 0 15px rgba(255, 193, 7, 0.7) !important;
 }
 
 /* Card do modal */
@@ -37,13 +34,12 @@ body {
     background: #1e1e1e !important;
     border: none !important;
     border-radius: 20px;
-    /* Mais arredondado */
 }
 
 /* Inputs */
 .form-control,
 .form-select {
-    background-color: #495057 !important;
+    background-color: #343a40 !important;
     border-color: #6c757d !important;
     color: #f8f9fa !important;
     transition: border-color 0.3s;
@@ -52,7 +48,7 @@ body {
 .form-control:focus,
 .form-select:focus {
     border-color: #ffc107 !important;
-    box-shadow: 0 0 5px rgba(255, 193, 7, 0.5);
+    box-shadow: 0 0 5px rgba(255, 193, 7, 0.5) !important;
 }
 
 /* Títulos */
@@ -61,8 +57,7 @@ h2,
 h3,
 h5 {
     color: #ffc107 !important;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-    /* Sombra para destaque */
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
 }
 
 /* Botões */
@@ -90,7 +85,15 @@ h5 {
 /* Lista do carrinho */
 .list-group-item {
     border-radius: 10px !important;
-    margin-bottom: 10px;
+    margin-bottom: 8px !important;
+    background-color: #2c3e50 !important;
+    border: 1px solid #495057 !important;
+}
+
+/* Força a cor do texto no carrinho */
+.list-group-item.text-muted {
+    background-color: #1e1e1e !important;
+    border: none !important;
 }
 
 /* Ícone flutuante */
@@ -98,33 +101,57 @@ h5 {
     pointer-events: auto;
 }
 
-/* Toast de sucesso personalizado - mais legível no tema escuro */
-.toast {
+.toast.bg-success {
     min-width: 300px;
     background-color: rgba(25, 135, 84, 0.95) !important;
-    /* Verde escuro sucesso, quase opaco */
     color: #ffffff !important;
-    /* Texto branco puro */
     border: 1px solid #2ca56a;
-    /* Borda verde clara para destaque */
     border-radius: 12px;
-    /* Mais arredondado e moderno */
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-    /* Sombra forte para "flutuar" */
 }
 
 .toast-body {
     font-weight: bold;
-    /* Texto em negrito para melhor leitura */
     font-size: 1.1rem;
 }
 
 .toast .btn-close-white {
     filter: invert(1);
-    /* Garante que o X de fechar fique branco */
 }
 
 /* Badge do carrinho flutuante */
 .badge {
     font-size: 0.8rem;
 }
+
+/* Configuração para controle de visibilidade via CSS (melhor para animação) */
+#floating-cart {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+#floating-cart.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Animação e Keyframes permanecem iguais */
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(255, 193, 7, 0.7);
+    }
+
+    70% {
+        box-shadow: 0 0 0 15px rgba(255, 193, 7, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(255, 193, 7, 0);
+    }
+}
+
+.animate-pulse {
+    animation: pulse 0.8s ease-out;
+}
+

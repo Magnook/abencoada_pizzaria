@@ -42,7 +42,6 @@ function renderizarCardapio() {
         container.appendChild(col);
     });
 }
-
 function adicionarAoCarrinho(id, nome, preco) {
     const itemExistente = carrinho.find(item => item.id === id);
     if (itemExistente) {
@@ -57,8 +56,26 @@ function adicionarAoCarrinho(id, nome, preco) {
     // MOSTRA TOAST DE SUCESSO
     mostrarToast(`${nome} adicionada ao carrinho! 🍕`);
 
-    // NÃO abre mais o modal automaticamente
+
+    const floatingButton = document.querySelector('#floating-cart .btn');
+    
+    // Usamos setTimeout para garantir que o display: block seja processado antes do início da animação.
+    setTimeout(() => {
+        if (floatingButton) {
+            // 1. Remove a classe para resetar a animação
+            floatingButton.classList.remove('animate-pulse');
+            // 2. Força o navegador a recalcular o estilo (essencial para reativar a animação)
+            void floatingButton.offsetWidth; 
+            // 3. Adiciona a classe para disparar a animação uma vez
+            floatingButton.classList.add('animate-pulse');
+            
+            setTimeout(() => {
+                floatingButton.classList.remove('animate-pulse');
+            }, 800);
+        }
+    }, 10); // Atraso mínimo de 10ms
 }
+
 
 // Função para mostrar toast
 function mostrarToast(mensagem) {
@@ -98,12 +115,12 @@ function atualizarFloatingCart() {
 
 // Esconde o floating cart quando o botão fixo está visível (scroll para baixo)
 window.addEventListener('scroll', () => {
-    const botaoFixo = document.querySelector('.mt-4.btn-warning'); // o botão "Ver Carrinho"
+    const botaoFixo = document.querySelector('.mt-4.btn-warning'); 
     if (botaoFixo) {
         const rect = botaoFixo.getBoundingClientRect();
         const floatingCart = document.getElementById('floating-cart');
         if (rect.top < window.innerHeight && rect.bottom > 0) {
-            floatingCart.style.display = 'none'; // esconde quando o botão fixo está na tela
+            floatingCart.style.display = 'none';
         } else if (carrinho.reduce((s, i) => s + i.quantidade, 0) > 0) {
             floatingCart.style.display = 'block';
         }
